@@ -40,6 +40,5 @@ signed main(){
   cin>>n>>m;
   t();
   cout<<calc(n,m)<<endl;
-
   return 0;
 }

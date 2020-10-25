@@ -13,13 +13,22 @@ using namespace std;
 #define int long long
 #define endl "\n"
 
-int A[100000];
+int A[300000],B[300000];
 
-void zalgorithm(int a,string S){
-  A[0] = S.size();
-  int i = 1, j = 0;
+
+//Aに入るのは、Sのi文字目から何文字がtの接頭辞と一致するか
+
+void zalgorithm(string S,string t){
+  int i = 0, j = 0;
+  while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+  A[i] = j;
+  if (j != 0){
+    int k = 1;
+    while (i+k < S.size() && k+A[k] < j) A[i+k] = A[k], ++k;
+  }
+  i=1;j=0;
   while (i < S.size()) {
-    while (i+j < S.size() && S[j] == S[i+j]) ++j;
+    while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
     A[i] = j;
     if (j == 0) { ++i; continue;}
     int k = 1;
@@ -28,16 +37,24 @@ void zalgorithm(int a,string S){
   }
 }
 
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
-  string s;
-  cin>>s;
-  zalgorithm(s);
-  rep(i,s.size() ){
-    cout<<A[i];
+void rzalgorithm(string S,string t){
+  int i = 0, j = 0;
+  reverse(t.begin(),t.end() );
+  reverse(S.begin(),S.end() );
+  // cout<<t<<endl;
+  while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+  B[i] = j;
+  if (j != 0){
+    int k = 1;
+    while (i+k < S.size() && k+B[k] < j) B[i+k] = B[k], ++k;
   }
-  cout<<endl;
-
-  return 0;
+  i=1;j=0;
+  while (i < S.size()) {
+    while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+    B[i] = j;
+    if (j == 0) { ++i; continue;}
+    int k = 1;
+    while (i+k < S.size() && k+B[k] < j) B[i+k] = B[k], ++k;
+    i += k; j -= k;
+  }
 }

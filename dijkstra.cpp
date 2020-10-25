@@ -1,7 +1,5 @@
 #include<bits/stdc++.h>
-
 using namespace std;
-
 
 #define MOD 1000000007
 //#define MOD 998244353
@@ -56,19 +54,4 @@ void dijkstra(int st,int n){
   }
 }
       
-    
-signed main(){
-  int v,e,r;
-  cin>>v>>e>>r;
-  rep(i,e){
-    int a,b,c;
-    cin>>a>>b>>c;
-    mp[a].edges.push_back(make_pair(c,b));
-  }
-  dijkstra(r,v);
-  rep(i,v){
-    if(mp[i].cost==-1) cout<<"INF"<<endl;
-    else cout<<mp[i].cost<<endl;
-  }
-  return 0;
-}
+ 

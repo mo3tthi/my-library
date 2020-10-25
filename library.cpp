@@ -3,9 +3,7 @@
 ##################################################
 
 #include<bits/stdc++.h>
-
 using namespace std;
-
 
 #define MOD 1000000007
 //#define MOD 998244353
@@ -60,22 +58,7 @@ void dijkstra(int st,int n){
   }
 }
       
-    
-signed main(){
-  int v,e,r;
-  cin>>v>>e>>r;
-  rep(i,e){
-    int a,b,c;
-    cin>>a>>b>>c;
-    mp[a].edges.push_back(make_pair(c,b));
-  }
-  dijkstra(r,v);
-  rep(i,v){
-    if(mp[i].cost==-1) cout<<"INF"<<endl;
-    else cout<<mp[i].cost<<endl;
-  }
-  return 0;
-}
+ 
 
 
 ##################################################
@@ -102,12 +85,42 @@ map<int,int> prime_factor(int n){
 }
 
 
+
+
+
+##################################################
+################## template.cpp ##################
+##################################################
+
+#include<bits/stdc++.h>
+using namespace std;
+#define MOD 1000000007
+//#define MOD 998244353
+#define INF 1000000010
+#define EPS 1e-9
+#define F first
+#define S second
+
+#define debug(x) cout<<x<<endl;
+#define repi(i,x,n) for(int i=x;i<n;i++)
+#define rep(i,n) repi(i,0,n)
+#define lp(i,n) repi(i,0,n)
+#define repn(i,n) for(int i=n;i>=0;i--)
+#define int long long
+#define endl "\n"
+
+typedef pair<int,int> PII;
+typedef pair<int,string> PIS;
+typedef pair<string,int> PSI;
+
+
 signed main(){
   cin.tie(0);	
   ios::sync_with_stdio(false);
+
+
   return 0;
 }
-
 
 ##################################################
 ################## divisor.cpp ###################
@@ -142,13 +155,7 @@ vector<int> divisor(int n){
 }
 
 
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
 
-
-  return 0;
-}
 
 
 ##################################################
@@ -172,107 +179,7 @@ int number(State &begin){
   return num;
 }
 
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
 
-
-  return 0;
-}
-
-
-##################################################
-################ segment_tree.cpp ################
-##################################################
-
-#include<bits/stdc++.h>
-using namespace std;
-#define MOD 1000000007
-#define INF 1000000010
-#define EPS 1e-9
-#define fst first
-#define scd second
-
-#define debug(x) cout<<x<<endl;
-#define repi(i,x,n) for(int i=x;i<n;i++)
-#define rep(i,n) repi(i,0,n)
-#define lp(i,n) repi(i,0,n)
-#define repn(i,n) for(int i=n;i>=0;i--)
-#define int long long
-#define endl "\n"
-
-class segtree{
-  int n;
-  
-
-
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
-
-
-  return 0;
-}
-
-
-##################################################
-################ combination.cpp #################
-##################################################
-
-#include<bits/stdc++.h>
-using namespace std;
-#define MOD 1000000007
-#define BIG 1000000010
-#define EPS 1e-9
-#define fst first
-#define scd second
-
-#define debug(x) cout<<x<<endl;
-#define repi(i,x,n) for(int i=x;i<n;i++)
-#define rep(i,n) repi(i,0,n)
-#define repn(i,n) for(int i=n;i>=0;i--)
-#define int long long
-
-
-int aa[200000],bb[200000],cc[2000000];
- 
-void t(){
-  aa[0]=aa[1]=1;
-  bb[0]=bb[1]=1;
-  cc[1]=1;
-  repi(i,2,200000){
-    aa[i]=aa[i-1]*i%MOD;
-    cc[i]=MOD-cc[MOD%i]*(MOD/i)%MOD;
-    bb[i]=bb[i-1]*cc[i]%MOD;
-  }
-}
- 
-int calc(int n,int k){
-  if(n<k) return 0;
-  if(n<0 || k<0) return 0;
-  return aa[n]*(bb[k]*bb[n-k]%MOD)%MOD;
-}
- 
-
-
-signed main(){
-  int n,m;
-  cin>>n>>m;
-  t();
-  cout<<calc(n,m)<<endl;
-
-  return 0;
-}
-
-
-##################################################
-#################### bfs.cpp #####################
-##################################################
-
-int a[N][M];
-
-void bfs(){
-  
 
 
 ##################################################
@@ -321,7 +228,6 @@ signed main(){
   cin>>n>>m;
   t();
   cout<<calc(n,m)<<endl;
-
   return 0;
 }
 
@@ -345,13 +251,22 @@ using namespace std;
 #define int long long
 #define endl "\n"
 
-int A[100000];
+int A[300000],B[300000];
 
-void zalgorithm(int a,string S){
-  A[0] = S.size();
-  int i = 1, j = 0;
+
+//Aに入るのは、Sのi文字目から何文字がtの接頭辞と一致するか
+
+void zalgorithm(string S,string t){
+  int i = 0, j = 0;
+  while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+  A[i] = j;
+  if (j != 0){
+    int k = 1;
+    while (i+k < S.size() && k+A[k] < j) A[i+k] = A[k], ++k;
+  }
+  i=1;j=0;
   while (i < S.size()) {
-    while (i+j < S.size() && S[j] == S[i+j]) ++j;
+    while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
     A[i] = j;
     if (j == 0) { ++i; continue;}
     int k = 1;
@@ -360,18 +275,26 @@ void zalgorithm(int a,string S){
   }
 }
 
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
-  string s;
-  cin>>s;
-  zalgorithm(s);
-  rep(i,s.size() ){
-    cout<<A[i];
+void rzalgorithm(string S,string t){
+  int i = 0, j = 0;
+  reverse(t.begin(),t.end() );
+  reverse(S.begin(),S.end() );
+  // cout<<t<<endl;
+  while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+  B[i] = j;
+  if (j != 0){
+    int k = 1;
+    while (i+k < S.size() && k+B[k] < j) B[i+k] = B[k], ++k;
   }
-  cout<<endl;
-
-  return 0;
+  i=1;j=0;
+  while (i < S.size()) {
+    while (i+j < S.size() && j < t.size() && t[j] == S[i+j]) ++j;
+    B[i] = j;
+    if (j == 0) { ++i; continue;}
+    int k = 1;
+    while (i+k < S.size() && k+B[k] < j) B[i+k] = B[k], ++k;
+    i += k; j -= k;
+  }
 }
 
 
@@ -413,58 +336,6 @@ bool primeNumber(int n){
 }
 
 
-
-int main(){
-
-
-  return 0;
-}
-
-
-#include<bits/stdc++.h>
-using namespace std;
-#define MOD 1000000007
-#define BIG 1000000010
-#define repi(i,x,n) for(int i=x;i<n;i++)
-#define rep(i,n) repi(i,0,n)
-#define repn(i,n) for(int i=n;i>=0;i--)
-typedef long long int ll;
-
-#define N 100000
-
-int prime[N];
-
-void eratosthenes(){
-  rep(i,N) prime[i]=1;
-  prime[0]=prime[1]=0;
-  rep(i,n){
-    if(prime[i]){
-      for(int j=i+i;j<N;j+=i) prime[j]=0;
-    }
-  }
-}
-
-bool primeNumber(int n){
-  if(n < 2) return false;
-  else{
-    for(int i = 2; i * i <= n; i++){
-      if(n % i == 0) return false;
-    }
-    return true;
-  }
-}
-
-
-
-int main(){
-
-
-  return 0;
-}
-
-
-
-
 ##################################################
 ################### power.cpp ####################
 ##################################################
@@ -503,16 +374,6 @@ int power(int n,int m){
     m=(m*m)%MOD;
   }
   return num;
-}
-
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
-  int a,b;
-  cin>>a>>b;
-  cout<<power(b,a)<<endl;
-
-  return 0;
 }
 
 
@@ -569,26 +430,7 @@ signed main(){
 ############### unionfindtree.cpp ################
 ##################################################
 
-#include<bits/stdc++.h>
-using namespace std;
-#define MOD 1000000007
-//#define MOD 998244353
-#define INF 1000000010
-#define EPS 1e-9
-#define F first
-#define S second
 
-#define debug(x) cout<<x<<endl;
-#define repi(i,x,n) for(int i=x;i<n;i++)
-#define rep(i,n) repi(i,0,n)
-#define lp(i,n) repi(i,0,n)
-#define repn(i,n) for(int i=n;i>=0;i--)
-#define int long long
-#define endl "\n"
-
-typedef pair<int,int> PII;
-typedef pair<int,string> PIS;
-typedef pair<string,int> PSI;
 
 struct UnionFind{
   vector<int> data;
@@ -616,13 +458,71 @@ struct UnionFind{
   }
 };
 
-signed main(){
-  cin.tie(0);	
-  ios::sync_with_stdio(false);
 
+##################################################
+############## ivu_Bellmanford.cpp ###############
+##################################################
 
-  return 0;
+#include <bits/stdc++.h> 
+using namespace std;
+#define FOR(i,l,r) for(int i=(l); i<(r); i++)
+#define REP(i,n) FOR(i,0,n)
+#define endl "\n"
+#define debug(x) cout<<x<<endl;
+typedef long long ll;
+static const int INF = 1e9+7;
+
+struct Edge {
+  int to,cost;  //to 接続先　, cost 重み
+  Edge(int to, int cost) : to(to), cost(cost) {}  // コンストラクタ
+};
+
+typedef vector<vector<Edge> > Edge_List;  
+Edge_List graph;  
+
+vector<int> dist; //最短距離
+
+// 戻り値がtrueなら負の閉路を含む
+bool bellman_ford(int n, int s) { 
+    //nは頂点数,sは始まりの頂点
+
+    dist = vector<int>(n,INF);
+    dist[s] = 0; // 開始点の距離は0
+    for (int i=0; i<n; i++) {
+        for (int v=0; v<n; v++) {
+            for (int k=0; k<graph[v].size(); k++) {
+                Edge e = graph[v][k];
+                if (dist[v] != INF && dist[e.to] > dist[v] + e.cost) {
+                    dist[e.to] = dist[v] + e.cost;
+                    if (i == n - 1) return true; // n回目にも更新があるならば負の閉路が存在している
+                }
+            }
+        }
+    }
+  return false;
 }
+
+
+/*int main() {
+  int n, m;
+  cin >> n >> m;
+  graph = Edge_List(n);
+  
+  for (int i=0; i<m; i++) {
+    int from,to,cost;
+    cin >>from>>to>>cost;
+    graph[from].push_back(Edge(to, cost));
+  }
+  
+  bellman_ford(n,0);
+
+  for (int i=1; i<n; i++) {
+    if (dist[i] != INF)
+      cout<<"0から"<< i <<"へのコストは: "<<dist[i]<<endl;
+  }
+  
+}
+*/
 
 
 ##################################################

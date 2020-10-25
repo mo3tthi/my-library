@@ -1,10 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define MOD 1000000007
+//#define MOD 998244353
 #define INF 1000000010
 #define EPS 1e-9
-#define fst first
-#define scd second
+#define F first
+#define S second
 
 #define debug(x) cout<<x<<endl;
 #define repi(i,x,n) for(int i=x;i<n;i++)
@@ -14,9 +15,9 @@ using namespace std;
 #define int long long
 #define endl "\n"
 
-class segtree{
-  int n;
-  
+typedef pair<int,int> PII;
+typedef pair<int,string> PIS;
+typedef pair<string,int> PSI;
 
 
 signed main(){
