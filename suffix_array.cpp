@@ -134,6 +134,7 @@ signed main(){
   string s;
   cin>>s;
   SuffixArray sa(s);
+  LongestCommonPrefixArray LCP(sa);
   int n;
   cin>>n;
   sa.output();

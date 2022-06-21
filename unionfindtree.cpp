@@ -20,7 +20,11 @@ struct UnionFind{
     if(data[k] < 0) return (k);
     return (data[k] = find(data[k]));
   }
- 
+
+   bool isSame(int a,int b){
+    return find(a)==find(b);
+  }
+  
   int size(int k) {
     return (-data[find(k)]);
   }
